@@ -22,20 +22,19 @@ public class Problem3 {
                 System.out.println("answer = " + answer);
             }
 */
-            answer += is369(i) ? getClapNum(i) : 0;
+            String numStr = String.valueOf(i);
+            answer += is369(numStr) ? getClapNum(numStr) : 0;
         }
 
         return answer;
     }
 
-    public static boolean is369(int number) {
-        String numberStr = String.valueOf(number);
+    public static boolean is369(String numberStr) {
         return numberStr.contains("3") || numberStr.contains("6") || numberStr.contains("9");
     }
 
-    public static int getClapNum(int number) {
+    public static int getClapNum(String numberStr) {
         int result = 0;
-        String numberStr = String.valueOf(number);
         for (int i = 0; i < numberStr.length(); i++) {
             result = generateCount(result, numberStr, i);
         }
