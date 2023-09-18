@@ -8,15 +8,14 @@ package onboarding;
  */
 public class Problem2 {
     public static String solution(String cryptogram) {
-        String answer = callRepetition(cryptogram);
-        return answer;
+        return callRepetition(cryptogram);
     }
 
     public static String callRepetition(String cryptogram) {
         StringBuffer buffer = new StringBuffer(cryptogram);
 
         while (removeRepetition(buffer)) {
-            System.out.println("buffer = " + buffer);
+//            System.out.println("buffer = " + buffer);
         }
 
         return buffer.toString();

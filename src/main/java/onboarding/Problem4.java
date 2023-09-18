@@ -24,9 +24,9 @@ public class Problem4 {
     private static void generateCode(char[] charArray, int i) {
         char target = charArray[i];
         if (isUpperChar(target)) {
-            charArray[i] = (char) (155 - (int) target);
+            charArray[i] = (char) (155 - (byte) target);
         } else if (isLowerChar(target)) {
-            charArray[i] = (char) (219 - (int) target);
+            charArray[i] = (char) (219 - (byte) target);
         }
     }
 

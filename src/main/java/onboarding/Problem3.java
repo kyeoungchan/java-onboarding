@@ -15,13 +15,6 @@ public class Problem3 {
         int answer = 0;
 
         for (int i = 1; i < number + 1; i++) {
-/*
-            if (is369(i)) {
-                answer += getClapNum(i);
-                System.out.println("i = " + i);
-                System.out.println("answer = " + answer);
-            }
-*/
             String numStr = String.valueOf(i);
             answer += is369(numStr) ? getClapNum(numStr) : 0;
         }
@@ -29,11 +22,11 @@ public class Problem3 {
         return answer;
     }
 
-    public static boolean is369(String numberStr) {
+    private static boolean is369(String numberStr) {
         return numberStr.contains("3") || numberStr.contains("6") || numberStr.contains("9");
     }
 
-    public static int getClapNum(String numberStr) {
+    private static int getClapNum(String numberStr) {
         int result = 0;
         for (int i = 0; i < numberStr.length(); i++) {
             result = generateCount(result, numberStr, i);

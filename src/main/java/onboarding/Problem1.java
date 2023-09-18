@@ -8,8 +8,8 @@ class Problem1 {
 
     public static int solution(List<Integer> pobi, List<Integer> crong) {
 //        int answer = Integer.MAX_VALUE;
-        int[] pobiArray = pobi.stream().mapToInt(n -> n.intValue()).toArray();
-        int[] crongArray = crong.stream().mapToInt(n -> n.intValue()).toArray();
+        int[] pobiArray = pobi.stream().mapToInt(Integer::intValue).toArray();
+        int[] crongArray = crong.stream().mapToInt(Integer::intValue).toArray();
 
         int pobiScore = calculateScore(pobiArray);
         int crongScore = calculateScore(crongArray);
@@ -32,7 +32,8 @@ class Problem1 {
         }
         int leftScore = calculateMaximumAddOrMultiply(left);
         int rightScore = calculateMaximumAddOrMultiply(right);
-        return leftScore > rightScore ? leftScore : rightScore;
+//        return leftScore > rightScore ? leftScore : rightScore;
+        return Math.max(leftScore, rightScore);
     }
 
     private static boolean validate(int left, int right) {
@@ -60,7 +61,8 @@ class Problem1 {
             add += digits[i];
             multi *= digits[i];
         }
-        return add > multi ? add : multi;
+//        return add > multi ? add : multi;
+        return Math.max(add, multi);
     }
 
     private static int[] splitDigits(int page) {
@@ -85,6 +87,7 @@ class Problem1 {
         return digits;
     }
 
+/*
     private static int solution(int[] pobi, int[] crong) {
         int pobiScore = calculateScore(pobi);
         int crongScore = calculateScore(crong);
@@ -94,6 +97,6 @@ class Problem1 {
         }
         return pobiScore > crongScore ? 1 : (pobiScore < crongScore ? 2 : 0);
     }
-
+*/
 
 }
