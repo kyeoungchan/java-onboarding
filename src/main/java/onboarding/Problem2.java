@@ -15,7 +15,7 @@ public class Problem2 {
         StringBuffer buffer = new StringBuffer(cryptogram);
 
         while (removeRepetition(buffer)) {
-//            System.out.println("buffer = " + buffer);
+            System.out.println("buffer = " + buffer);
         }
 
         return buffer.toString();
@@ -45,6 +45,8 @@ public class Problem2 {
             }
             if (endIdx != -1) {
                 buffer.delete(startIdx, endIdx + 1);
+                i = startIdx - 1;
+                // buffer 내부에 문자열을 삭제함으로써 인덱스 에러가 발생할 소지가 있으므로 startIdx 앞으로 옮겨준다.
                 startIdx = -1;
                 endIdx = -1;
                 anyRemoved = true;
