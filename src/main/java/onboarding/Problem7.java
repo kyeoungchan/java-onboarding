@@ -23,6 +23,7 @@ public class Problem7 {
         problem7.getFriendsList(user, friends);
         problem7.getScoreMap(user, friends, visitors);
 
+        problem7.calculateCommon(friends);
         problem7.calculateVisit(visitors);
 
 
@@ -47,25 +48,53 @@ public class Problem7 {
     private void getScoreMap(String user, List<List<String>> friends, List<String> visitors) {
 
         for (List<String> element : friends) {
+            if (element.contains(user)) {
+                // 사용자가 존재하는 리스트라면, 그 리스트는 추천 목록에서는 배제된다.
+                continue;
+            }
             for (int i = 0; i < 2; i++) {
-                scoreMap.putIfAbsent(element.get(i), 0);
+                String insertingFriend = element.get(i);
+                if (!userFriends.contains(insertingFriend))
+                    scoreMap.putIfAbsent(insertingFriend, 0);
+            }
+        }
+
+        visitors.forEach(v -> {
+                    if (!userFriends.contains(v) && !user.equals(v)) {
+                        scoreMap.putIfAbsent(v, 0);
+                    }
+                });
+    }
+
+    private void calculateCommon(List<List<String>> friends) {
+        for (List<String> f : friends) {
+            String f1 = f.get(0);
+            String f2 = f.get(1);
+
+            if (userFriends.contains(f1) && scoreMap.get(f2) != null) {
+                scoreMap.put(f2, scoreMap.get(f2) + 10);
+            }
+            if (userFriends.contains(f2) && scoreMap.get(f1) != null) {
+                scoreMap.put(f1, scoreMap.get(f1) + 10);
             }
         }
     }
 
     private void calculateVisit(List<String> visitors) {
-        visitors.forEach(v -> scoreMap.put(v, scoreMap.getOrDefault(v, 0) + 1));
+        visitors.forEach(v -> {
+            if (scoreMap.get(v) != null) {
+                scoreMap.put(v, scoreMap.get(v) + 1);
+            }
+        });
     }
 
     private List<String> sortMap() {
-        List<Map.Entry<String, Integer>> collect = scoreMap
+        List<String> recommendList = scoreMap
                 .entrySet()
                 .stream()
                 .filter(e -> e.getValue() != 0)
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .collect(Collectors.toList());
-
-        List<String> recommendList = collect.stream().sorted(Map.Entry.comparingByKey())
+                .sorted(Map.Entry.<String, Integer>comparingByValue(Comparator.reverseOrder())
+                        .thenComparing(Map.Entry.comparingByKey()))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
