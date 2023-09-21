@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
  *      - 제한된 지원자의 이메일 목록 생성
  *      - 이메일을 오름차순으로 정렬
  *      - 이메일 중복은 제거
+ *
+ * 코드 리뷰 후
+ *  - 글자를 2개만 뽑아도 이미 중복 닉네임을 파악이 가능한데, 3글자 이상도 뽑아냄으로써 불필요한 반복문 및 비교 연산을 거치게 함.
  */
 public class Problem6 {
     public static List<String> solution(List<List<String>> forms) {
@@ -43,7 +46,7 @@ public class Problem6 {
 
         List<StringBuffer> nickNames = generateNickNameList(forms);
 
-        List<Integer> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>(); // 제한된 닉네임 인덱스 정보를 담는 리스트
 
         for (int i = 0; i < nickNames.size(); i++) {
 
@@ -61,8 +64,8 @@ public class Problem6 {
                     // 이미 result에 비교하는 닉네임에 대한 인덱스에 담겨 있거나, 비교하려는 닉네임이 분해한 닉네임과 같다면 반복문 넘기기
                     if (isUnnecessary(result, currentNickName, comparingNickName, comparingIdx)) continue;
 
-                    for (String parsedNickName : parsedNickNames) {
-                        if (comparingNickName.indexOf(parsedNickName) > -1) {
+                    for (String parsedNickName : parsedNickNames) { // 제이엠 -> 제이, 이엠
+                        if (comparingNickName.indexOf(parsedNickName) > -1) { // 제이슨
                             // 문자열을 포함하는 개념으로 사용된 분기점이다.
 
                             // 현재 분해된 닉네임에 대한 인덱스 정보도 담고(없다면)
@@ -101,6 +104,7 @@ public class Problem6 {
 
     private static List<String> parsedFixedLenNickNames(StringBuffer nickName, int len) {
         // 길이가 5 -> 3글자면 3번. nickName.length - len + 1
+        //제이슨제이 -> 제이슨, 이슨제, 슨제이
         List<String> result = new ArrayList<>();
         for (int i = 0; i < nickName.length() - len + 1; i++) {
             result.add(nickName.substring(i, i + len));
